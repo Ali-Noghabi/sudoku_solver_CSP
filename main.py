@@ -7,8 +7,6 @@ sqrtN = int(math.sqrt(N))
 puzzle = example.puzzle2
 
 # implement sudoku cell to store available numbers of every cell
-
-
 class SudokuCell:
     def __init__(self, row, col):
         self.row = row
@@ -64,7 +62,7 @@ class SudokuGrid:
                 cell.remove_number(value)
 
     # to restore available numbers in backtrack step
-    def clear_value(self, row, col):
+    def restore_value(self, row, col):
         cell = self.grid[row][col]
         value = cell.value
         cell.value = 0
@@ -152,7 +150,7 @@ class SudokuSolver:
                 if self.solve():
                     return True
                 else:
-                    self.grid.clear_value(row, col)
+                    self.grid.restore_value(row, col)
                     self.stack.pop()
 
         # no valid moves found, backtrack
@@ -166,7 +164,7 @@ class SudokuSolver:
         return None, None
 
 
-class SudokuBoard(tk.Canvas):
+class SudokuDrawer(tk.Canvas):
     def __init__(self, parent, board):
         self.WIDTH = 40
         self.HEIGHT = 40
@@ -214,6 +212,8 @@ print(f"calculate time: {elapsed_time} secends")
 # draw sudoku gui
 root = tk.Tk()
 root.title("Sudoku Board")
-board = SudokuBoard(root, solver.solution.grid)
+board = SudokuDrawer(root, solver.solution.grid)
 board.pack()
 root.mainloop()
+
+#ChatGPT3.5 has been used in this code implement
